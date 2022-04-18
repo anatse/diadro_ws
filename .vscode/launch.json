@@ -1,0 +1,82 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'diadro'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=diadro"
+                ],
+                "filter": {
+                    "name": "diadro",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'diadro'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=diadro",
+                    "--package=diadro"
+                ],
+                "filter": {
+                    "name": "diadro",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'diadro'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=diadro",
+                    "--package=diadro"
+                ],
+                "filter": {
+                    "name": "diadro",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'dserver'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=dserver",
+                    "--package=dserver"
+                ],
+                "filter": {
+                    "name": "dserver",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+    ]
+}

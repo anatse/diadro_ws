@@ -1,0 +1,789 @@
+warning[B004]: found 2 duplicate entries for crate 'cfg-if'
+   ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:16:1
+   │  
+16 │ ╭ cfg-if 0.1.10 registry+https://github.com/rust-lang/crates.io-index
+17 │ │ cfg-if 1.0.0 registry+https://github.com/rust-lang/crates.io-index
+   │ ╰──────────────────────────────────────────────────────────────────^ lock entries
+   │  
+   = cfg-if v0.1.10
+     └── core-video-sys v0.1.4
+         └── winit v0.26.1
+             ├── egui-winit v0.17.0
+             │   ├── eframe v0.17.0
+             │   │   └── eframe_template v0.1.0
+             │   └── egui_glow v0.17.0
+             │       ├── eframe v0.17.0 (*)
+             │       └── egui_web v0.17.0
+             │           └── eframe v0.17.0 (*)
+             └── glutin v0.28.0
+                 └── egui_glow v0.17.0 (*)
+   = cfg-if v1.0.0
+     ├── console_error_panic_hook v0.1.7
+     │   └── eframe_template v0.1.0
+     ├── getrandom v0.2.6
+     │   └── ahash v0.7.6
+     │       ├── egui v0.17.0
+     │       │   ├── eframe v0.17.0
+     │       │   │   └── eframe_template v0.1.0 (*)
+     │       │   ├── egui-winit v0.17.0
+     │       │   │   ├── eframe v0.17.0 (*)
+     │       │   │   └── egui_glow v0.17.0
+     │       │   │       ├── eframe v0.17.0 (*)
+     │       │   │       └── egui_web v0.17.0
+     │       │   │           └── eframe v0.17.0 (*)
+     │       │   ├── egui_glow v0.17.0 (*)
+     │       │   ├── egui_web v0.17.0 (*)
+     │       │   └── epi v0.17.0
+     │       │       ├── eframe v0.17.0 (*)
+     │       │       ├── egui-winit v0.17.0 (*)
+     │       │       ├── egui_glow v0.17.0 (*)
+     │       │       └── egui_web v0.17.0 (*)
+     │       └── epaint v0.17.0
+     │           └── egui v0.17.0 (*)
+     ├── instant v0.1.12
+     │   ├── egui-winit v0.17.0 (*)
+     │   ├── parking_lot v0.11.2
+     │   │   ├── glutin v0.28.0
+     │   │   │   └── egui_glow v0.17.0 (*)
+     │   │   ├── glutin v0.28.0 (*)
+     │   │   ├── glutin v0.28.0 (*)
+     │   │   ├── winit v0.26.1
+     │   │   │   ├── egui-winit v0.17.0 (*)
+     │   │   │   └── glutin v0.28.0 (*)
+     │   │   └── winit v0.26.1 (*)
+     │   ├── parking_lot_core v0.8.5
+     │   │   └── parking_lot v0.11.2 (*)
+     │   └── winit v0.26.1 (*)
+     ├── libloading v0.7.3
+     │   ├── dlib v0.5.0
+     │   │   ├── smithay-client-toolkit v0.15.3
+     │   │   │   ├── smithay-clipboard v0.6.5
+     │   │   │   │   └── copypasta v0.7.1
+     │   │   │   │       └── egui-winit v0.17.0 (*)
+     │   │   │   └── winit v0.26.1 (*)
+     │   │   └── wayland-sys v0.29.4
+     │   │       ├── wayland-client v0.29.4
+     │   │       │   ├── glutin v0.28.0 (*)
+     │   │       │   ├── smithay-client-toolkit v0.15.3 (*)
+     │   │       │   ├── smithay-clipboard v0.6.5 (*)
+     │   │       │   ├── wayland-cursor v0.29.4
+     │   │       │   │   └── smithay-client-toolkit v0.15.3 (*)
+     │   │       │   ├── wayland-egl v0.29.4
+     │   │       │   │   └── glutin v0.28.0 (*)
+     │   │       │   ├── wayland-protocols v0.29.4
+     │   │       │   │   ├── smithay-client-toolkit v0.15.3 (*)
+     │   │       │   │   └── winit v0.26.1 (*)
+     │   │       │   └── winit v0.26.1 (*)
+     │   │       ├── wayland-commons v0.29.4
+     │   │       │   ├── wayland-client v0.29.4 (*)
+     │   │       │   └── wayland-protocols v0.29.4 (*)
+     │   │       └── wayland-egl v0.29.4 (*)
+     │   ├── glutin v0.28.0 (*)
+     │   └── glutin v0.28.0 (*)
+     ├── log v0.4.16
+     │   ├── calloop v0.9.3
+     │   │   └── smithay-client-toolkit v0.15.3 (*)
+     │   ├── gl_generator v0.14.0
+     │   │   ├── (build) glutin_egl_sys v0.1.5
+     │   │   │   ├── glutin v0.28.0 (*)
+     │   │   │   ├── glutin v0.28.0 (*)
+     │   │   │   └── glutin v0.28.0 (*)
+     │   │   ├── (build) glutin_gles2_sys v0.1.5
+     │   │   │   └── glutin v0.28.0 (*)
+     │   │   ├── (build) glutin_glx_sys v0.1.7
+     │   │   │   └── glutin v0.28.0 (*)
+     │   │   └── (build) glutin_wgl_sys v0.1.5
+     │   │       └── glutin v0.28.0 (*)
+     │   ├── glutin v0.28.0 (*)
+     │   ├── jni v0.19.0
+     │   │   └── webbrowser v0.6.0
+     │   │       └── egui-winit v0.17.0 (*)
+     │   ├── mio v0.8.2
+     │   │   └── winit v0.26.1 (*)
+     │   ├── ndk-glue v0.5.1
+     │   │   └── winit v0.26.1 (*)
+     │   ├── ndk-glue v0.6.1
+     │   │   └── webbrowser v0.6.0 (*)
+     │   ├── smithay-client-toolkit v0.15.3 (*)
+     │   ├── wasm-bindgen-backend v0.2.79
+     │   │   └── wasm-bindgen-macro-support v0.2.79
+     │   │       └── wasm-bindgen-macro v0.2.79
+     │   │           └── wasm-bindgen v0.2.79
+     │   │               ├── console_error_panic_hook v0.1.7 (*)
+     │   │               ├── egui_glow v0.17.0 (*)
+     │   │               ├── egui_web v0.17.0 (*)
+     │   │               ├── glow v0.11.2
+     │   │               │   ├── egui-winit v0.17.0 (*)
+     │   │               │   ├── egui_glow v0.17.0 (*)
+     │   │               │   └── epi v0.17.0 (*)
+     │   │               ├── instant v0.1.12 (*)
+     │   │               ├── instant v0.1.12 (*)
+     │   │               ├── instant v0.1.12 (*)
+     │   │               ├── js-sys v0.3.56
+     │   │               │   ├── egui_web v0.17.0 (*)
+     │   │               │   ├── glow v0.11.2 (*)
+     │   │               │   ├── instant v0.1.12 (*)
+     │   │               │   ├── instant v0.1.12 (*)
+     │   │               │   ├── instant v0.1.12 (*)
+     │   │               │   ├── wasm-bindgen-futures v0.4.29
+     │   │               │   │   └── egui_web v0.17.0 (*)
+     │   │               │   └── web-sys v0.3.56
+     │   │               │       ├── egui_glow v0.17.0 (*)
+     │   │               │       ├── egui_web v0.17.0 (*)
+     │   │               │       ├── glow v0.11.2 (*)
+     │   │               │       ├── instant v0.1.12 (*)
+     │   │               │       ├── instant v0.1.12 (*)
+     │   │               │       ├── instant v0.1.12 (*)
+     │   │               │       ├── wasm-bindgen-futures v0.4.29 (*)
+     │   │               │       ├── webbrowser v0.6.0 (*)
+     │   │               │       └── winit v0.26.1 (*)
+     │   │               ├── tracing-wasm v0.2.1
+     │   │               │   └── eframe_template v0.1.0 (*)
+     │   │               ├── wasm-bindgen-futures v0.4.29 (*)
+     │   │               ├── web-sys v0.3.56 (*)
+     │   │               └── winit v0.26.1 (*)
+     │   ├── winit v0.26.1 (*)
+     │   └── xcb v0.10.1
+     │       └── x11-clipboard v0.5.3
+     │           └── copypasta v0.7.1 (*)
+     ├── nix v0.22.3
+     │   ├── calloop v0.9.3 (*)
+     │   ├── smithay-client-toolkit v0.15.3 (*)
+     │   ├── wayland-client v0.29.4 (*)
+     │   ├── wayland-commons v0.29.4 (*)
+     │   └── wayland-cursor v0.29.4 (*)
+     ├── parking_lot_core v0.8.5 (*)
+     ├── parking_lot_core v0.9.2
+     │   └── parking_lot v0.12.0
+     │       └── epaint v0.17.0 (*)
+     ├── tracing v0.1.32
+     │   ├── eframe_template v0.1.0 (*)
+     │   ├── egui v0.17.0 (*)
+     │   ├── egui-winit v0.17.0 (*)
+     │   ├── egui_glow v0.17.0 (*)
+     │   ├── egui_web v0.17.0 (*)
+     │   ├── epi v0.17.0 (*)
+     │   └── tracing-wasm v0.2.1 (*)
+     ├── wasm-bindgen v0.2.79 (*)
+     └── wasm-bindgen-futures v0.4.29 (*)
+
+warning[B004]: found 2 duplicate entries for crate 'core-foundation'
+   ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:25:1
+   │  
+25 │ ╭ core-foundation 0.7.0 registry+https://github.com/rust-lang/crates.io-index
+26 │ │ core-foundation 0.9.3 registry+https://github.com/rust-lang/crates.io-index
+   │ ╰───────────────────────────────────────────────────────────────────────────^ lock entries
+   │  
+   = core-foundation v0.7.0
+     └── core-graphics v0.19.2
+         └── core-video-sys v0.1.4
+             └── winit v0.26.1
+                 ├── egui-winit v0.17.0
+                 │   ├── eframe v0.17.0
+                 │   │   └── eframe_template v0.1.0
+                 │   └── egui_glow v0.17.0
+                 │       ├── eframe v0.17.0 (*)
+                 │       └── egui_web v0.17.0
+                 │           └── eframe v0.17.0 (*)
+                 └── glutin v0.28.0
+                     └── egui_glow v0.17.0 (*)
+   = core-foundation v0.9.3
+     ├── cocoa v0.24.0
+     │   ├── glutin v0.28.0
+     │   │   └── egui_glow v0.17.0
+     │   │       ├── eframe v0.17.0
+     │   │       │   └── eframe_template v0.1.0
+     │   │       └── egui_web v0.17.0
+     │   │           └── eframe v0.17.0 (*)
+     │   └── winit v0.26.1
+     │       ├── egui-winit v0.17.0
+     │       │   ├── eframe v0.17.0 (*)
+     │       │   └── egui_glow v0.17.0 (*)
+     │       └── glutin v0.28.0 (*)
+     ├── cocoa-foundation v0.1.0
+     │   └── cocoa v0.24.0 (*)
+     ├── core-graphics v0.22.3
+     │   ├── cocoa v0.24.0 (*)
+     │   └── winit v0.26.1 (*)
+     ├── core-graphics-types v0.1.1
+     │   ├── cocoa-foundation v0.1.0 (*)
+     │   └── core-graphics v0.22.3 (*)
+     ├── glutin v0.28.0 (*)
+     └── winit v0.26.1 (*)
+
+warning[B004]: found 2 duplicate entries for crate 'core-foundation-sys'
+   ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:27:1
+   │  
+27 │ ╭ core-foundation-sys 0.7.0 registry+https://github.com/rust-lang/crates.io-index
+28 │ │ core-foundation-sys 0.8.3 registry+https://github.com/rust-lang/crates.io-index
+   │ ╰───────────────────────────────────────────────────────────────────────────────^ lock entries
+   │  
+   = core-foundation-sys v0.7.0
+     ├── core-foundation v0.7.0
+     │   └── core-graphics v0.19.2
+     │       └── core-video-sys v0.1.4
+     │           └── winit v0.26.1
+     │               ├── egui-winit v0.17.0
+     │               │   ├── eframe v0.17.0
+     │               │   │   └── eframe_template v0.1.0
+     │               │   └── egui_glow v0.17.0
+     │               │       ├── eframe v0.17.0 (*)
+     │               │       └── egui_web v0.17.0
+     │               │           └── eframe v0.17.0 (*)
+     │               └── glutin v0.28.0
+     │                   └── egui_glow v0.17.0 (*)
+     └── core-video-sys v0.1.4 (*)
+   = core-foundation-sys v0.8.3
+     └── core-foundation v0.9.3
+         ├── cocoa v0.24.0
+         │   ├── glutin v0.28.0
+         │   │   └── egui_glow v0.17.0
+         │   │       ├── eframe v0.17.0
+         │   │       │   └── eframe_template v0.1.0
+         │   │       └── egui_web v0.17.0
+         │   │           └── eframe v0.17.0 (*)
+         │   └── winit v0.26.1
+         │       ├── egui-winit v0.17.0
+         │       │   ├── eframe v0.17.0 (*)
+         │       │   └── egui_glow v0.17.0 (*)
+         │       └── glutin v0.28.0 (*)
+         ├── cocoa-foundation v0.1.0
+         │   └── cocoa v0.24.0 (*)
+         ├── core-graphics v0.22.3
+         │   ├── cocoa v0.24.0 (*)
+         │   └── winit v0.26.1 (*)
+         ├── core-graphics-types v0.1.1
+         │   ├── cocoa-foundation v0.1.0 (*)
+         │   └── core-graphics v0.22.3 (*)
+         ├── glutin v0.28.0 (*)
+         └── winit v0.26.1 (*)
+
+warning[B004]: found 2 duplicate entries for crate 'core-graphics'
+   ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:29:1
+   │  
+29 │ ╭ core-graphics 0.19.2 registry+https://github.com/rust-lang/crates.io-index
+30 │ │ core-graphics 0.22.3 registry+https://github.com/rust-lang/crates.io-index
+   │ ╰──────────────────────────────────────────────────────────────────────────^ lock entries
+   │  
+   = core-graphics v0.19.2
+     └── core-video-sys v0.1.4
+         └── winit v0.26.1
+             ├── egui-winit v0.17.0
+             │   ├── eframe v0.17.0
+             │   │   └── eframe_template v0.1.0
+             │   └── egui_glow v0.17.0
+             │       ├── eframe v0.17.0 (*)
+             │       └── egui_web v0.17.0
+             │           └── eframe v0.17.0 (*)
+             └── glutin v0.28.0
+                 └── egui_glow v0.17.0 (*)
+   = core-graphics v0.22.3
+     ├── cocoa v0.24.0
+     │   ├── glutin v0.28.0
+     │   │   └── egui_glow v0.17.0
+     │   │       ├── eframe v0.17.0
+     │   │       │   └── eframe_template v0.1.0
+     │   │       └── egui_web v0.17.0
+     │   │           └── eframe v0.17.0 (*)
+     │   └── winit v0.26.1
+     │       ├── egui-winit v0.17.0
+     │       │   ├── eframe v0.17.0 (*)
+     │       │   └── egui_glow v0.17.0 (*)
+     │       └── glutin v0.28.0 (*)
+     └── winit v0.26.1 (*)
+
+warning[S004]: detected 'git' source not explicitly allowed
+   ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:40:15
+   │
+40 │ eframe 0.17.0 git+https://github.com/emilk/egui#68d5806b41725fb8f8a5e62d7acd94b5ac9140f0
+   │               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source
+   │
+   = eframe v0.17.0
+     └── eframe_template v0.1.0
+
+warning[S004]: detected 'git' source not explicitly allowed
+   ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:42:13
+   │
+42 │ egui 0.17.0 git+https://github.com/emilk/egui#68d5806b41725fb8f8a5e62d7acd94b5ac9140f0
+   │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source
+   │
+   = egui v0.17.0
+     ├── eframe v0.17.0
+     │   └── eframe_template v0.1.0
+     ├── egui-winit v0.17.0
+     │   ├── eframe v0.17.0 (*)
+     │   └── egui_glow v0.17.0
+     │       ├── eframe v0.17.0 (*)
+     │       └── egui_web v0.17.0
+     │           └── eframe v0.17.0 (*)
+     ├── egui_glow v0.17.0 (*)
+     ├── egui_web v0.17.0 (*)
+     └── epi v0.17.0
+         ├── eframe v0.17.0 (*)
+         ├── egui-winit v0.17.0 (*)
+         ├── egui_glow v0.17.0 (*)
+         └── egui_web v0.17.0 (*)
+
+warning[S004]: detected 'git' source not explicitly allowed
+   ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:43:19
+   │
+43 │ egui-winit 0.17.0 git+https://github.com/emilk/egui#68d5806b41725fb8f8a5e62d7acd94b5ac9140f0
+   │                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source
+   │
+   = egui-winit v0.17.0
+     ├── eframe v0.17.0
+     │   └── eframe_template v0.1.0
+     └── egui_glow v0.17.0
+         ├── eframe v0.17.0 (*)
+         └── egui_web v0.17.0
+             └── eframe v0.17.0 (*)
+
+warning[S004]: detected 'git' source not explicitly allowed
+   ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:44:18
+   │
+44 │ egui_glow 0.17.0 git+https://github.com/emilk/egui#68d5806b41725fb8f8a5e62d7acd94b5ac9140f0
+   │                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source
+   │
+   = egui_glow v0.17.0
+     ├── eframe v0.17.0
+     │   └── eframe_template v0.1.0
+     └── egui_web v0.17.0
+         └── eframe v0.17.0 (*)
+
+warning[B004]: found 2 duplicate entries for crate 'ndk'
+   ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:83:1
+   │  
+83 │ ╭ ndk 0.5.0 registry+https://github.com/rust-lang/crates.io-index
+84 │ │ ndk 0.6.0 registry+https://github.com/rust-lang/crates.io-index
+   │ ╰───────────────────────────────────────────────────────────────^ lock entries
+   │  
+   = ndk v0.5.0
+     ├── ndk-glue v0.5.1
+     │   └── winit v0.26.1
+     │       ├── egui-winit v0.17.0
+     │       │   ├── eframe v0.17.0
+     │       │   │   └── eframe_template v0.1.0
+     │       │   └── egui_glow v0.17.0
+     │       │       ├── eframe v0.17.0 (*)
+     │       │       └── egui_web v0.17.0
+     │       │           └── eframe v0.17.0 (*)
+     │       └── glutin v0.28.0
+     │           └── egui_glow v0.17.0 (*)
+     └── winit v0.26.1 (*)
+   = ndk v0.6.0
+     └── ndk-glue v0.6.1
+         └── webbrowser v0.6.0
+             └── egui-winit v0.17.0
+                 ├── eframe v0.17.0
+                 │   └── eframe_template v0.1.0
+                 └── egui_glow v0.17.0
+                     ├── eframe v0.17.0 (*)
+                     └── egui_web v0.17.0
+                         └── eframe v0.17.0 (*)
+
+warning[S004]: detected 'git' source not explicitly allowed
+   ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:45:17
+   │
+45 │ egui_web 0.17.0 git+https://github.com/emilk/egui#68d5806b41725fb8f8a5e62d7acd94b5ac9140f0
+   │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source
+   │
+   = egui_web v0.17.0
+     └── eframe v0.17.0
+         └── eframe_template v0.1.0
+
+warning[B004]: found 2 duplicate entries for crate 'ndk-glue'
+   ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:86:1
+   │  
+86 │ ╭ ndk-glue 0.5.1 registry+https://github.com/rust-lang/crates.io-index
+87 │ │ ndk-glue 0.6.1 registry+https://github.com/rust-lang/crates.io-index
+   │ ╰────────────────────────────────────────────────────────────────────^ lock entries
+   │  
+   = ndk-glue v0.5.1
+     └── winit v0.26.1
+         ├── egui-winit v0.17.0
+         │   ├── eframe v0.17.0
+         │   │   └── eframe_template v0.1.0
+         │   └── egui_glow v0.17.0
+         │       ├── eframe v0.17.0 (*)
+         │       └── egui_web v0.17.0
+         │           └── eframe v0.17.0 (*)
+         └── glutin v0.28.0
+             └── egui_glow v0.17.0 (*)
+   = ndk-glue v0.6.1
+     └── webbrowser v0.6.0
+         └── egui-winit v0.17.0
+             ├── eframe v0.17.0
+             │   └── eframe_template v0.1.0
+             └── egui_glow v0.17.0
+                 ├── eframe v0.17.0 (*)
+                 └── egui_web v0.17.0
+                     └── eframe v0.17.0 (*)
+
+warning[B004]: found 2 duplicate entries for crate 'ndk-sys'
+   ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:89:1
+   │  
+89 │ ╭ ndk-sys 0.2.2 registry+https://github.com/rust-lang/crates.io-index
+90 │ │ ndk-sys 0.3.0 registry+https://github.com/rust-lang/crates.io-index
+   │ ╰───────────────────────────────────────────────────────────────────^ lock entries
+   │  
+   = ndk-sys v0.2.2
+     ├── ndk v0.5.0
+     │   ├── ndk-glue v0.5.1
+     │   │   └── winit v0.26.1
+     │   │       ├── egui-winit v0.17.0
+     │   │       │   ├── eframe v0.17.0
+     │   │       │   │   └── eframe_template v0.1.0
+     │   │       │   └── egui_glow v0.17.0
+     │   │       │       ├── eframe v0.17.0 (*)
+     │   │       │       └── egui_web v0.17.0
+     │   │       │           └── eframe v0.17.0 (*)
+     │   │       └── glutin v0.28.0
+     │   │           └── egui_glow v0.17.0 (*)
+     │   └── winit v0.26.1 (*)
+     ├── ndk-glue v0.5.1 (*)
+     └── winit v0.26.1 (*)
+   = ndk-sys v0.3.0
+     ├── ndk v0.6.0
+     │   └── ndk-glue v0.6.1
+     │       └── webbrowser v0.6.0
+     │           └── egui-winit v0.17.0
+     │               ├── eframe v0.17.0
+     │               │   └── eframe_template v0.1.0
+     │               └── egui_glow v0.17.0
+     │                   ├── eframe v0.17.0 (*)
+     │                   └── egui_web v0.17.0
+     │                       └── eframe v0.17.0 (*)
+     └── ndk-glue v0.6.1 (*)
+
+warning[S004]: detected 'git' source not explicitly allowed
+   ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:46:14
+   │
+46 │ emath 0.17.0 git+https://github.com/emilk/egui#68d5806b41725fb8f8a5e62d7acd94b5ac9140f0
+   │              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source
+   │
+   = emath v0.17.0
+     └── epaint v0.17.0
+         └── egui v0.17.0
+             ├── eframe v0.17.0
+             │   └── eframe_template v0.1.0
+             ├── egui-winit v0.17.0
+             │   ├── eframe v0.17.0 (*)
+             │   └── egui_glow v0.17.0
+             │       ├── eframe v0.17.0 (*)
+             │       └── egui_web v0.17.0
+             │           └── eframe v0.17.0 (*)
+             ├── egui_glow v0.17.0 (*)
+             ├── egui_web v0.17.0 (*)
+             └── epi v0.17.0
+                 ├── eframe v0.17.0 (*)
+                 ├── egui-winit v0.17.0 (*)
+                 ├── egui_glow v0.17.0 (*)
+                 └── egui_web v0.17.0 (*)
+
+warning[B004]: found 2 duplicate entries for crate 'parking_lot'
+    ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:103:1
+    │  
+103 │ ╭ parking_lot 0.11.2 registry+https://github.com/rust-lang/crates.io-index
+104 │ │ parking_lot 0.12.0 registry+https://github.com/rust-lang/crates.io-index
+    │ ╰────────────────────────────────────────────────────────────────────────^ lock entries
+    │  
+    = parking_lot v0.11.2
+      ├── glutin v0.28.0
+      │   └── egui_glow v0.17.0
+      │       ├── eframe v0.17.0
+      │       │   └── eframe_template v0.1.0
+      │       └── egui_web v0.17.0
+      │           └── eframe v0.17.0 (*)
+      ├── glutin v0.28.0 (*)
+      ├── glutin v0.28.0 (*)
+      ├── winit v0.26.1
+      │   ├── egui-winit v0.17.0
+      │   │   ├── eframe v0.17.0 (*)
+      │   │   └── egui_glow v0.17.0 (*)
+      │   └── glutin v0.28.0 (*)
+      └── winit v0.26.1 (*)
+    = parking_lot v0.12.0
+      └── epaint v0.17.0
+          └── egui v0.17.0
+              ├── eframe v0.17.0
+              │   └── eframe_template v0.1.0
+              ├── egui-winit v0.17.0
+              │   ├── eframe v0.17.0 (*)
+              │   └── egui_glow v0.17.0
+              │       ├── eframe v0.17.0 (*)
+              │       └── egui_web v0.17.0
+              │           └── eframe v0.17.0 (*)
+              ├── egui_glow v0.17.0 (*)
+              ├── egui_web v0.17.0 (*)
+              └── epi v0.17.0
+                  ├── eframe v0.17.0 (*)
+                  ├── egui-winit v0.17.0 (*)
+                  ├── egui_glow v0.17.0 (*)
+                  └── egui_web v0.17.0 (*)
+
+warning[S004]: detected 'git' source not explicitly allowed
+   ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:47:15
+   │
+47 │ epaint 0.17.0 git+https://github.com/emilk/egui#68d5806b41725fb8f8a5e62d7acd94b5ac9140f0
+   │               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source
+   │
+   = epaint v0.17.0
+     └── egui v0.17.0
+         ├── eframe v0.17.0
+         │   └── eframe_template v0.1.0
+         ├── egui-winit v0.17.0
+         │   ├── eframe v0.17.0 (*)
+         │   └── egui_glow v0.17.0
+         │       ├── eframe v0.17.0 (*)
+         │       └── egui_web v0.17.0
+         │           └── eframe v0.17.0 (*)
+         ├── egui_glow v0.17.0 (*)
+         ├── egui_web v0.17.0 (*)
+         └── epi v0.17.0
+             ├── eframe v0.17.0 (*)
+             ├── egui-winit v0.17.0 (*)
+             ├── egui_glow v0.17.0 (*)
+             └── egui_web v0.17.0 (*)
+
+warning[S004]: detected 'git' source not explicitly allowed
+   ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:48:12
+   │
+48 │ epi 0.17.0 git+https://github.com/emilk/egui#68d5806b41725fb8f8a5e62d7acd94b5ac9140f0
+   │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ source
+   │
+   = epi v0.17.0
+     ├── eframe v0.17.0
+     │   └── eframe_template v0.1.0
+     ├── egui-winit v0.17.0
+     │   ├── eframe v0.17.0 (*)
+     │   └── egui_glow v0.17.0
+     │       ├── eframe v0.17.0 (*)
+     │       └── egui_web v0.17.0
+     │           └── eframe v0.17.0 (*)
+     ├── egui_glow v0.17.0 (*)
+     └── egui_web v0.17.0 (*)
+
+warning[B004]: found 2 duplicate entries for crate 'parking_lot_core'
+    ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:105:1
+    │  
+105 │ ╭ parking_lot_core 0.8.5 registry+https://github.com/rust-lang/crates.io-index
+106 │ │ parking_lot_core 0.9.2 registry+https://github.com/rust-lang/crates.io-index
+    │ ╰────────────────────────────────────────────────────────────────────────────^ lock entries
+    │  
+    = parking_lot_core v0.8.5
+      └── parking_lot v0.11.2
+          ├── glutin v0.28.0
+          │   └── egui_glow v0.17.0
+          │       ├── eframe v0.17.0
+          │       │   └── eframe_template v0.1.0
+          │       └── egui_web v0.17.0
+          │           └── eframe v0.17.0 (*)
+          ├── glutin v0.28.0 (*)
+          ├── glutin v0.28.0 (*)
+          ├── winit v0.26.1
+          │   ├── egui-winit v0.17.0
+          │   │   ├── eframe v0.17.0 (*)
+          │   │   └── egui_glow v0.17.0 (*)
+          │   └── glutin v0.28.0 (*)
+          └── winit v0.26.1 (*)
+    = parking_lot_core v0.9.2
+      └── parking_lot v0.12.0
+          └── epaint v0.17.0
+              └── egui v0.17.0
+                  ├── eframe v0.17.0
+                  │   └── eframe_template v0.1.0
+                  ├── egui-winit v0.17.0
+                  │   ├── eframe v0.17.0 (*)
+                  │   └── egui_glow v0.17.0
+                  │       ├── eframe v0.17.0 (*)
+                  │       └── egui_web v0.17.0
+                  │           └── eframe v0.17.0 (*)
+                  ├── egui_glow v0.17.0 (*)
+                  ├── egui_web v0.17.0 (*)
+                  └── epi v0.17.0
+                      ├── eframe v0.17.0 (*)
+                      ├── egui-winit v0.17.0 (*)
+                      ├── egui_glow v0.17.0 (*)
+                      └── egui_web v0.17.0 (*)
+
+warning[B004]: found 2 duplicate entries for crate 'wasi'
+    ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:147:1
+    │  
+147 │ ╭ wasi 0.10.2+wasi-snapshot-preview1 registry+https://github.com/rust-lang/crates.io-index
+148 │ │ wasi 0.11.0+wasi-snapshot-preview1 registry+https://github.com/rust-lang/crates.io-index
+    │ ╰────────────────────────────────────────────────────────────────────────────────────────^ lock entries
+    │  
+    = wasi v0.10.2+wasi-snapshot-preview1
+      └── getrandom v0.2.6
+          └── ahash v0.7.6
+              ├── egui v0.17.0
+              │   ├── eframe v0.17.0
+              │   │   └── eframe_template v0.1.0
+              │   ├── egui-winit v0.17.0
+              │   │   ├── eframe v0.17.0 (*)
+              │   │   └── egui_glow v0.17.0
+              │   │       ├── eframe v0.17.0 (*)
+              │   │       └── egui_web v0.17.0
+              │   │           └── eframe v0.17.0 (*)
+              │   ├── egui_glow v0.17.0 (*)
+              │   ├── egui_web v0.17.0 (*)
+              │   └── epi v0.17.0
+              │       ├── eframe v0.17.0 (*)
+              │       ├── egui-winit v0.17.0 (*)
+              │       ├── egui_glow v0.17.0 (*)
+              │       └── egui_web v0.17.0 (*)
+              └── epaint v0.17.0
+                  └── egui v0.17.0 (*)
+    = wasi v0.11.0+wasi-snapshot-preview1
+      └── mio v0.8.2
+          └── winit v0.26.1
+              ├── egui-winit v0.17.0
+              │   ├── eframe v0.17.0
+              │   │   └── eframe_template v0.1.0
+              │   └── egui_glow v0.17.0
+              │       ├── eframe v0.17.0 (*)
+              │       └── egui_web v0.17.0
+              │           └── eframe v0.17.0 (*)
+              └── glutin v0.28.0
+                  └── egui_glow v0.17.0 (*)
+
+warning[L003]: eframe_template = 0.1.0 is unlicensed
+  ┌─ eframe_template 0.1.0 (path+file:///Users/sbt-sementsov-av/projects/eframe_template):2:9
+  │
+2 │ name = "eframe_template"
+  │         ^^^^^^^^^^^^^^^ a valid license expression could not be retrieved for the crate
+3 │ version = "0.1.0"
+4 │ license = ""
+  │            - license expression was not specified
+  │
+  = eframe_template v0.1.0
+
+warning[S006]: allowed 'github.com' organization  was not encountered
+    ┌─ /Users/sbt-sementsov-av/projects/eframe_template/deny.toml:207:11
+    │
+207 │ github = [""]
+    │           ^^ no crate source fell under this organization
+
+warning[S006]: allowed 'gitlab.com' organization  was not encountered
+    ┌─ /Users/sbt-sementsov-av/projects/eframe_template/deny.toml:209:11
+    │
+209 │ gitlab = [""]
+    │           ^^ no crate source fell under this organization
+
+warning[S006]: allowed 'bitbucket.org' organization  was not encountered
+    ┌─ /Users/sbt-sementsov-av/projects/eframe_template/deny.toml:211:14
+    │
+211 │ bitbucket = [""]
+    │              ^^ no crate source fell under this organization
+
+warning[L006]: license was not encountered
+   ┌─ /Users/sbt-sementsov-av/projects/eframe_template/deny.toml:78:5
+   │
+78 │     "0BSD",
+   │     ^^^^^^ unmatched license allowance
+
+warning[L006]: license was not encountered
+   ┌─ /Users/sbt-sementsov-av/projects/eframe_template/deny.toml:80:5
+   │
+80 │     "BSD-2-Clause",
+   │     ^^^^^^^^^^^^^^ unmatched license allowance
+
+error[A001]: Multiple soundness issues
+    ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:178:1
+    │
+178 │ xcb 0.10.1 registry+https://github.com/rust-lang/crates.io-index
+    │ ---------------------------------------------------------------- security vulnerability detected
+    │
+    = ID: RUSTSEC-2021-0019
+    = Advisory: https://rustsec.org/advisories/RUSTSEC-2021-0019
+    = ## Calls `std::str::from_utf8_unchecked()` without any checks
+      
+      The function `xcb::xproto::GetAtomNameReply::name()` calls
+      `std::str::from_utf8_unchecked()` on the raw bytes that were received from the
+      X11 server without any validity checks. The X11 server only prevents interior
+      null bytes, but otherwise allows any X11 client to create an atom for arbitrary
+      bytes.
+      
+      This issue is tracked here: https://github.com/rust-x-bindings/rust-xcb/issues/96
+      
+      ## `xcb::xproto::GetPropertyReply::value()` allows arbitrary return types
+      
+      The function `xcb::xproto::GetPropertyReply::value()` returns a slice of type
+      `T` where `T` is an unconstrained type parameter. The raw bytes received from
+      the X11 server are interpreted as the requested type.
+      
+      The users of the `xcb` crate are advised to only call this function with the
+      intended types. These are `u8`, `u16`, and `u32`.
+      
+      This issue is tracked here: https://github.com/rust-x-bindings/rust-xcb/issues/95
+      
+      ## Out of bounds read in `xcb::xproto::change_property()`
+      
+      `xcb::xproto::change_property` has (among others) the arguments `format: u8` and
+      `data: &[T]`. The intended use is one of the following cases:
+      - `format = 8` and `T = u8`
+      - `format = 16` and `T = u16`
+      - `format = 32` and `T = u32`
+      However, this constraint is not enforced. For example, it is possible to call
+      the function with `format = 32` and `T = u8`. In this case, a read beyond the
+      end of the `data` slice is performed and the bytes are sent to the X11 server.
+      
+      The users of the `xcb` crate are advised to only call this function with one of
+      the intended argument combinations.
+      
+      This issue is tracked here: https://github.com/rust-x-bindings/rust-xcb/issues/94
+      
+      ## 'Safe' wrapper around `std::mem::transmute()`
+      
+      The function `xcb::base::cast_event()` takes a reference to a
+      `xcb::base::GenericEvent` and returns a reference to an arbitrary type, as
+      requested by the caller (or found via type interference). The function is
+      implemented as a direct call to `std::mem::transmute()`. Since the return type
+      is not constrained, this allows transmution to an incorrect type or a type that
+      is larger than the X11 event that was passed in.
+      
+      X11 events are mostly always 32 bytes large and this function works as intended.
+      
+      Users are advised to only cast to the event structs provided by the `xcb` crate
+      (and hope for the best).
+      
+      This issue is tracked here: https://github.com/rust-x-bindings/rust-xcb/issues/78
+    = Announcement: https://github.com/RustSec/advisory-db/issues/653
+    = Solution: Upgrade to >=1.0
+    = xcb v0.10.1
+      └── x11-clipboard v0.5.3
+          └── copypasta v0.7.1
+              └── egui-winit v0.17.0
+                  ├── eframe v0.17.0
+                  │   └── eframe_template v0.1.0
+                  └── egui_glow v0.17.0
+                      ├── eframe v0.17.0 (*)
+                      └── egui_web v0.17.0
+                          └── eframe v0.17.0 (*)
+
+warning[A004]: Soundness issue with base::Error
+    ┌─ /Users/sbt-sementsov-av/projects/eframe_template/Cargo.lock:178:1
+    │
+178 │ xcb 0.10.1 registry+https://github.com/rust-lang/crates.io-index
+    │ ---------------------------------------------------------------- unsound advisory detected
+    │
+    = ID: RUSTSEC-2020-0097
+    = Advisory: https://rustsec.org/advisories/RUSTSEC-2020-0097
+    = `base::Error` type contains public field named `ptr`.
+      With this definition, it is possible to create a `base::Error` with an invalid pointer and trigger memory safety errors
+      such as use-after-free or double-free with safe Rust.
+      
+      The users of `xcb` crate are advised not to manipulate the field.
+    = Announcement: https://github.com/rtbo/rust-xcb/issues/93
+    = Solution: No safe upgrade is available!
+    = xcb v0.10.1
+      └── x11-clipboard v0.5.3
+          └── copypasta v0.7.1
+              └── egui-winit v0.17.0
+                  ├── eframe v0.17.0
+                  │   └── eframe_template v0.1.0
+                  └── egui_glow v0.17.0
+                      ├── eframe v0.17.0 (*)
+                      └── egui_web v0.17.0
+                          └── eframe v0.17.0 (*)
+

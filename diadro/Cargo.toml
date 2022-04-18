@@ -1,0 +1,41 @@
+[package]
+name = "diadro"
+version = "0.1.0"
+authors = ["Emil Ernerfeldt <emil.ernerfeldt@gmail.com>"]
+edition = "2021"
+rust-version = "1.59"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+tracing = "*"
+eframe = { git = "https://github.com/emilk/egui", branch = "master", features=["persistence"] }
+serde = { version = "*", features = ["derive"] }
+serde_json = "*"
+minidom = "0.14.0"
+base64 = "*"
+flate2 = "*"
+urlencoding = "*"
+thiserror = "*"
+futures = "*"
+futures_codec = "*"
+futures_cbor_codec = "*"
+
+[profile.release]
+opt-level = 2 # fast and small wasm
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+tokio = { version = "*", features = ["rt-multi-thread", "time"] }
+# awc = "*"
+# actix-rt = "*"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+# pharos = "*"
+# wasm-bindgen = "*"
+# wasm-bindgen-futures = "*"
+# ws_stream_wasm = "*"
+console_error_panic_hook = "*"
+tracing-wasm = "*"
+# async-runtime = "*"
+wasm-sockets = "*"
