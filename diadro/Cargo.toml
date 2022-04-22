@@ -21,21 +21,16 @@ thiserror = "*"
 futures = "*"
 futures_codec = "*"
 futures_cbor_codec = "*"
-
-[profile.release]
-opt-level = 2 # fast and small wasm
+uuid = { version = "*", features = ["v4"] }
+getrandom = { version = "0.2", features = ["js"] }
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 tokio = { version = "*", features = ["rt-multi-thread", "time"] }
-# awc = "*"
-# actix-rt = "*"
+chrono = { version = "*", default-features = false, features = ["clock"] }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
-# pharos = "*"
-# wasm-bindgen = "*"
-# wasm-bindgen-futures = "*"
-# ws_stream_wasm = "*"
+chrono = { version = "*", default-features = false, features = ["wasmbind", "clock"] }
 console_error_panic_hook = "*"
 tracing-wasm = "*"
-# async-runtime = "*"
 wasm-sockets = "*"
+web-sys = { version = "*", features = ["Worker"]}

@@ -1,10 +1,15 @@
-use std::{cell::RefCell, rc::Rc};
+use std::{
+    cell::{Ref, RefCell},
+    rc::Rc,
+};
 
 use eframe::{
     egui::{CursorIcon, Id, InnerResponse, Painter, PointerButton, Sense, Ui, Visuals},
-    emath::Vec2,
-    epaint::{Color32, Pos2, Stroke},
+    emath::{Align2, Vec2},
+    epaint::{Color32, FontId, Pos2, Stroke},
 };
+
+use crate::ws::{AddFigure, RequestInfo, WsMessages};
 
 use super::{
     arrow::{ArrowFigure, ConnectionPoint},
@@ -266,7 +271,12 @@ impl Graphics {
     }
 
     /// Draw whole canvas
-    pub fn ui(&mut self, ui: &mut Ui) -> InnerResponse<()> {
+    pub fn ui(
+        &mut self,
+        ui: &mut Ui,
+        incoming: Ref<'_, Vec<WsMessages>>,
+    ) -> InnerResponse<Vec<WsMessages>> {
+        let mut inner = vec![];
         let ctx = ui.ctx();
         ctx.set_visuals(Visuals::light());
 
@@ -297,6 +307,21 @@ impl Graphics {
                 }
             }
         }
+
+        // Show incoming messages in current view
+        incoming.iter().for_each(|msg| match msg {
+            WsMessages::MousePosition(mp) => {
+                ui.painter().text(
+                    mp.position,
+                    Align2::RIGHT_TOP,
+                    mp.rq.user.clone(),
+                    FontId::proportional(8.),
+                    Color32::LIGHT_GREEN,
+                );
+            }
+            WsMessages::AddFigure(_fig) => tracing::error!("Not yet implemented figures"),
+            WsMessages::AddArrow(_arrow) => tracing::error!("Not yet implemented arrows"),
+        });
 
         if response.double_clicked() {
             if let Some(selected_figure) = self
@@ -397,6 +422,17 @@ impl Graphics {
                 let mut f = fig.unwrap();
                 f.set_id(self.graphics_data.generate_id());
                 f.drag_released(hover_pos, PointerButton::Primary);
+                let rect = f.rect();
+                // Send message to WebSocket
+                inner.push(WsMessages::AddFigure(AddFigure {
+                    rq: RequestInfo {
+                        board: "".to_owned(),
+                        user: "".to_owned(),
+                    },
+                    rect,
+                    text: "".to_owned(),
+                }));
+
                 self.graphics_data.add_figure(Rc::new(RefCell::new(f)));
                 self.graphics_data.selected_tool = Some(Box::new(RectFigure::default()));
             }
@@ -413,9 +449,6 @@ impl Graphics {
         self.graphics_data.draw(ui);
         self.draw_edge_controls(ui);
 
-        InnerResponse {
-            inner: (),
-            response,
-        }
+        InnerResponse { inner, response }
     }
 }

@@ -4,3 +4,8 @@ members = [
     "diadro",
     "dserver",
 ]
+
+[profile.release]
+opt-level = "s" # fast and small wasm
+lto = true
+strip = true

@@ -1,105 +1,104 @@
-use std::collections::HashMap;
-use std::time::{Duration, Instant};
+mod messages;
+mod server;
+mod session;
+mod wasm_msg;
+
+use std::io::Read;
+use std::time::Instant;
+use std::{env, fs};
+
+use actix::Addr;
+use actix_files::NamedFile;
+use actix_web::http::header::ContentEncoding;
+use actix_web::web::Path;
+use actix_web::{web, App, HttpRequest, HttpResponse, HttpServer, Result};
+
+use actix_web_actors::ws;
+use cached::proc_macro::cached;
 
 use actix::prelude::*;
-use actix::{Actor, StreamHandler};
-use actix_web::{web, App, Error, HttpRequest, HttpResponse, HttpServer};
-use actix_web_actors::ws;
-use tracing_subscriber::reload::Handle;
+use session::WsChatSession;
 
-
-#[derive(Message)]
-#[rtype(result = "()")]
-pub struct Message(pub String);
-
-#[derive(Debug)]
-pub struct ChatServer {
-    sessions: HashMap<usize, Recipient<Message>>,
+/// Cached static files compressed using brotli compression codec. Must be using only for files not larger than 5Mb
+#[cached(result = true)]
+fn load_file(name: String) -> Result<Vec<u8>> {
+    tracing::debug!("start reading file: {}", &name);
+    let file = fs::File::open(&name)?;
+    let mut buffer = Vec::new();
+    let mut input = brotli::CompressorReader::new(file, 8192, 6, 22);
+    let size = input.read_to_end(&mut buffer)?;
+    tracing::debug!("finish read file: {} size: {}", &name, size);
+    Ok(buffer)
 }
 
-impl Actor for ChatServer {
-    /// We are going to use simple Context, we just need ability to communicate
-    /// with other actors.
-    type Context = Context<Self>;
-}
-
-impl Handler<Message> for ChatServer {
-    type Result = ();
-
-    fn handle(&mut self, msg: Message, ctx: &mut Self::Context) -> Self::Result {
-        todo!()
-    }
-}
-
-/// Define HTTP actor
-struct MyWs {
-    pub hb: Instant,
-    pub addr: Addr<ChatServer>,
-}
-
-impl Actor for MyWs {
-    type Context = ws::WebsocketContext<Self>;
-}
-
-const HEARTBEAT_INTERVAL: Duration = Duration::from_secs(5);
-const CLIENT_TIMEOUT: Duration = Duration::from_secs(10);
-
-impl MyWs {
-    fn hb(&self, ctx: &mut ws::WebsocketContext<Self>) {
-        ctx.run_interval(HEARTBEAT_INTERVAL, |act, ctx| {
-            // check client heartbeats
-            if Instant::now().duration_since(act.hb) > CLIENT_TIMEOUT {
-                // heartbeat timed out
-                println!("Websocket Client heartbeat failed, disconnecting!");
-
-                // notify chat server
-                act.addr.do_send(Message("Hello".to_string()));
-
-                // stop actor
-                ctx.stop();
-
-                // don't try to send a ping
-                return;
-            }
-
-            ctx.ping(b"");
-        });
-    }
-}
-
-/// Handler for ws::Message message
-impl StreamHandler<Result<ws::Message, ws::ProtocolError>> for MyWs {
-    fn handle(&mut self, msg: Result<ws::Message, ws::ProtocolError>, ctx: &mut Self::Context) {
-        match msg {
-            Ok(ws::Message::Ping(msg)) => ctx.pong(&msg),
-            Ok(ws::Message::Text(text)) => ctx.text(text),
-            Ok(ws::Message::Binary(bin)) => {
-                println!("Message::Binary");
-                ctx.binary(bin);
-            }
-            _ => {
-                println!("Unknown message");
-            }
+/// Serves static files
+/// ### Argiuments
+/// * req - http request
+/// * data - configuration data, containing path to static files
+async fn index(req: HttpRequest, data: web::Data<String>) -> Result<HttpResponse> {
+    let filename = format!("{}/{}", data.as_str(), req.match_info().query("filename"));
+    match load_file(filename.clone()) {
+        Ok(data) => Ok(HttpResponse::Ok()
+            .append_header(ContentEncoding::Brotli)
+            .body(data)),
+        Err(err) => {
+            tracing::error!("{}, file: {}", err, &filename);
+            Ok(HttpResponse::NotFound().finish())
         }
     }
 }
 
-async fn index(req: HttpRequest, stream: web::Payload) -> Result<HttpResponse, Error> {
-    let resp = ws::start(MyWs {}, &req, stream);
-    // println!("resp: {:?}", resp);
-    resp
+async fn index_no_compress(req: HttpRequest, data: web::Data<String>) -> Result<NamedFile> {
+    let filename = format!("{}/{}", data.as_str(), req.match_info().query("filename"));
+    Ok(NamedFile::open(filename)?)
 }
 
+/// Entry point for our websocket route
+async fn ws_route(
+    req: HttpRequest,
+    stream: web::Payload,
+    id: Path<String>,
+    srv: web::Data<Addr<server::DroServer>>,
+) -> Result<HttpResponse> {
+    tracing::info!("come to ws route: {:?}", req);
+    ws::start(
+        WsChatSession {
+            id: id.into_inner(),
+            hb: Instant::now(),
+            name: None,
+            addr: srv.get_ref().clone(),
+            board: "todo!()".to_owned(),
+        },
+        &req,
+        stream,
+    )
+}
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let _ = tracing::subscriber::set_global_default(tracing_subscriber::FmtSubscriber::new())
         .map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))?;
 
-    HttpServer::new(|| 
+    let public_folder = match env::args().nth(1) {
+        Some(x) => x,
+        None => "diadro/docs".to_string(),
+    };
+
+    let data = web::Data::new(public_folder);
+
+    // Create DwoServer
+    let dro_srv = server::DroServer::new().start();
+
+    HttpServer::new(move || {
         App::new()
-        .route("/ws/", web::get().to(index)))
-        .bind(("0.0.0.0", 8081))?
-        .run()
-        .await
+            .app_data(data.clone())
+            .app_data(web::Data::new(dro_srv.clone()))
+            // .wrap(middleware::Compress::default())
+            .route("/public/{filename:.*}", web::get().to(index_no_compress))
+            .route("/ws/{id}", web::get().to(ws_route))
+    })
+    .bind(("0.0.0.0", 8081))?
+    .workers(num_cpus::get())
+    .run()
+    .await
 }

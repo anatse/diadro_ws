@@ -7,8 +7,16 @@ edition = "2021"
 
 [dependencies]
 actix = "*"
-actix-web = "*"
+actix-web = { version = "*", features = ["rustls"] }
+actix-files = "*"
 sled = "*"
 actix-web-actors = "*"
 tracing = "*"
 tracing-subscriber = "*"
+brotli = "*"
+thiserror = "*"
+anyhow = "*"
+cached = "*"
+num_cpus = "*"
+serde = { version = "*", features = ["derive"] }
+serde_json = "*"

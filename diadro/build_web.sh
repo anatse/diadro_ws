@@ -42,8 +42,8 @@ export RUSTFLAGS=--cfg=web_sys_unstable_apis
 # Clear output from old stuff:
 rm -f "docs/${CRATE_NAME_SNAKE_CASE}_bg.wasm"
 
-echo "Reformat source code"
-cargo fmt
+# echo "Reformat source code"
+# cargo fmt
 
 echo "Building rust…"
 BUILD=release

@@ -1,11 +1,12 @@
 #![forbid(unsafe_code)]
 // #![cfg_attr(not(debug_assertions), deny(warnings))] // Forbid warnings in release builds
-#![warn(clippy::all, rust_2018_idioms)]
+#![warn(clippy::all)]
 
 mod app;
 pub mod data;
 pub mod graph;
 pub mod rgraph;
+pub mod ws;
 
 pub use app::TemplateApp;
 
