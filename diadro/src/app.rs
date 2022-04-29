@@ -120,8 +120,9 @@ impl TemplateApp {
             tracing::debug!("Starting websocket commincation inside WASM");
 
             let window = match web_sys::window() {
-                Some(wnd) => format!("ws://{}:{}/ws/{}", 
-                    wnd.location().hostname().unwrap(), 
+                Some(wnd) => format!(
+                    "ws://{}:{}/ws/{}",
+                    wnd.location().hostname().unwrap(),
                     wnd.location().port().unwrap(),
                     self.id
                 ),

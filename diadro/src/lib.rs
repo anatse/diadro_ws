@@ -3,7 +3,6 @@
 #![warn(clippy::all)]
 
 mod app;
-pub mod data;
 pub mod graph;
 pub mod rgraph;
 pub mod ws;

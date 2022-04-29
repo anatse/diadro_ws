@@ -1,12 +1,15 @@
 use eframe::{
     egui::Id,
-    emath::{Pos2, Vec2},
+    emath::{Pos2, Rect, Vec2},
     epaint::Shape,
 };
 
 use crate::graph::Zoom;
 
-use super::{CellType, Figure, MxCell, MxConnectable, MxEdge};
+use super::{
+    algo::PointAlgoritm, ucell::UnMxEdge, CellType, Contained, Figure, MxCell, MxCellState,
+    MxConnectable,
+};
 
 impl Figure {
     /// Convert figure to equi::frame::Shape
@@ -110,6 +113,77 @@ impl Figure {
             }
         }
     }
+
+    /// Function checks if rectangle contains given point and also detemines for
+    /// which actions for rectangle at this point are allowed
+    /// ### Arguments
+    /// * rect -rectangle coordinates
+    /// * point - point to locate
+    /// * epsilone - tolerance
+    /// ### Return
+    /// * Contained enum or None
+    fn contains_in_rect(rect: Rect, point: Pos2, epsilon: f32) -> Option<Contained> {
+        match rect.contains(point) {
+            true if point.distance(rect.right_top()) <= epsilon => {
+                Some(Contained::ResizeTRtoBL(point))
+            }
+            true if point.distance(rect.left_top()) <= epsilon => {
+                Some(Contained::ResizeTLtoBR(point))
+            }
+            true if point.distance(rect.left_bottom()) <= epsilon => {
+                Some(Contained::ResizeBLtoTR(point))
+            }
+            true if point.distance(rect.right_bottom()) <= epsilon => {
+                Some(Contained::ResizeBRtoTL(point))
+            }
+            true if point.belong_line(&[rect.right_top(), rect.right_bottom()], epsilon) => {
+                Some(Contained::ResizeRtoL(point))
+            }
+            true if point.belong_line(&[rect.left_top(), rect.left_bottom()], epsilon) => {
+                Some(Contained::ResizeLtoR(point))
+            }
+            true if point.belong_line(&[rect.left_top(), rect.right_top()], epsilon) => {
+                Some(Contained::ResizeTtoB(point))
+            }
+            true if point.belong_line(&[rect.left_bottom(), rect.right_bottom()], epsilon) => {
+                Some(Contained::ResizeBtoT(point))
+            }
+            true => Some(Contained::InArea),
+            _ => None,
+        }
+    }
+
+    /// Check if the figure contains given point
+    /// TODO: Transform to Contains trait and implements the trait for each figure independently
+    pub fn contains(&self, point: Pos2, epsilon: f32) -> Option<Contained> {
+        match self {
+            Figure::Vec(shapes) => shapes
+                .iter()
+                .find_map(|figure| figure.contains(point, epsilon)),
+            Figure::Rect(rect) => Self::contains_in_rect(rect.rect, point, epsilon),
+            Figure::LineSegment { points, .. } => {
+                if point.belong_line(points, epsilon) {
+                    Some(Contained::InArea)
+                } else {
+                    None
+                }
+            }
+            Figure::Path(path) => {
+                if point.belong_path(&path.points, epsilon) {
+                    Some(Contained::InArea)
+                } else {
+                    None
+                }
+            }
+            Figure::Text(text) => {
+                Self::contains_in_rect(text.visual_bounding_rect(), point, epsilon)
+            }
+            _ => {
+                tracing::error!("Sorry, I don't know how to determine belonging ath the moment");
+                None
+            }
+        }
+    }
 }
 
 impl MxCell {
@@ -122,6 +196,7 @@ impl MxCell {
             }),
             shapes: Default::default(),
             connection_points: Default::default(),
+            state: MxCellState::Free,
         }
     }
 
@@ -129,12 +204,10 @@ impl MxCell {
     pub fn new_edge(id: Id) -> Self {
         Self {
             id,
-            cell_type: CellType::Edge(MxEdge {
-                start: None,
-                end: None,
-            }),
+            cell_type: CellType::Edge(UnMxEdge::new(None, None)),
             shapes: Default::default(),
             connection_points: Default::default(),
+            state: MxCellState::Free,
         }
     }
 
@@ -157,55 +230,42 @@ impl MxCell {
     pub fn connection_points(&self) -> &Vec<Pos2> {
         &self.connection_points
     }
-}
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_relations() {
-        let mut cells = vec![MxCell::new(Id::new("test1")), MxCell::new(Id::new("test2"))];
-        let mut edges = vec![
-            MxCell::new_edge(Id::new("edge1")),
-            MxCell::new_edge(Id::new("edge2")),
-        ];
-        if let Some(edge) = edges.get_mut(0) {
-            match &mut edge.cell_type {
-                CellType::Edge(e) => {
-                    e.start = Some(cells[0].id);
-                }
-                _ => {}
-            }
-        }
-        cells[0].connection_points.push(Pos2::ZERO);
-
-        let edge_id = edges[0].id;
-        let mut indices = MxCellIndices::new();
-        cells.into_iter().for_each(|cell| indices.add_cell(cell));
-        edges.into_iter().for_each(|cell| indices.add_cell(cell));
-
-        let edge = indices.extract_edge(edge_id).unwrap();
-        let con = indices.get(edge.start.unwrap()).unwrap();
-        assert_eq!(1, con.connection_points().len());
+    pub fn set_state(&mut self, state: MxCellState) {
+        self.state = state;
     }
 
-    // #[test]
-    // fn test_mx_relations() {
-    // let cells = vec![MxCell::new(Id::new("test1")), MxCell::new(Id::new("test2"))].into_iter().map(|c| Rc::new(RefCell::new(c)))
-    //     .collect::<Vec<Rc<RefCell<MxCell>>>>();
-    // let edges = vec![MxCell::new_edge(Id::new("edge1")), MxCell::new_edge(Id::new("edge2"))].into_iter().map(|c| Rc::new(RefCell::new(c)))
-    //     .collect::<Vec<Rc<RefCell<MxCell>>>>();
+    /// Find connection point by pos.
+    /// ### Arguments
+    /// * point - position used to find closest connection point
+    /// * epsilon - ± tolerance over which point will be determined
+    /// ### Return
+    /// * Option of Contained::ConnectionPoint(connection point index)
+    #[inline]
+    pub fn find_cp(&self, point: Pos2, epsilon: f32) -> Option<Contained> {
+        self.connection_points
+            .iter()
+            .enumerate()
+            .find(|(_, cp)| cp.distance(point) <= epsilon)
+            .map(|(idx, _)| Contained::ConnectionPoint(idx))
+    }
 
-    // let mut ct = RefCell::borrow_mut(edges[0].as_ref());
-    // match &mut ct.cell_type {
-    //     crate::rgraph::CellType::Edge(edge) => {
-    //         let c_ref = Rc::new(RefCell::borrow(&cells[0]));
-    //         edge.end = Some(Rc::new();
-    //     }
-    //     crate::rgraph::CellType::Connectable(con) => todo!(),
-    // }
-    // }
-
-    use eframe::{egui::Id, emath::Pos2};
-
-    use crate::rgraph::{CellType, MxCell, MxCellIndices};
+    /// Check if given point belongs to contained figure or figures&
+    /// ### Arguments
+    /// * point - position used to find closest connection point
+    /// * epsilon - ± tolerance over which point will be determined
+    /// ### Return
+    /// * Option of Contained enum
+    pub fn contains(&self, point: Pos2, epsilon: f32) -> Option<Contained> {
+        match &self.cell_type {
+            CellType::Edge(edge) => edge.contains(point),
+            _ => match self.state {
+                MxCellState::Selected => self.find_cp(point, epsilon),
+                _ => self
+                    .shapes
+                    .iter()
+                    .find_map(|figure| figure.contains(point, epsilon)),
+            },
+        }
+    }
 }
