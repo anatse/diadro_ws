@@ -127,7 +127,7 @@ impl GraphFigure for RectFigure {
         let offset = pos - drag_started;
         self.rect = self.rect.translate(offset);
         for point in &mut self.connection_points {
-            *point = *point + offset;
+            *point += offset;
         }
     }
 
@@ -234,7 +234,7 @@ impl GraphFigure for RectFigure {
         }
 
         // Compute connection points if empty
-        if self.connection_points.len() == 0 {
+        if self.connection_points.is_empty() {
             // Three point on each side
             self.compute_connection_points();
         }

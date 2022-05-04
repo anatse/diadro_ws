@@ -83,7 +83,7 @@ impl Handler<ClientMessage> for DroServer {
 
     fn handle(&mut self, msg: ClientMessage, _ctx: &mut Self::Context) -> Self::Result {
         tracing::debug!("on client message: {:?}", &msg);
-        if msg.message.len() > 0 {
+        if !msg.message.is_empty() {
             let (board, user_id) = match &msg.message[0] {
                 crate::wasm_msg::WsMessages::MousePosition(MousePosition { rq, .. })
                 | crate::wasm_msg::WsMessages::AddArrow(AddArrow { rq, .. })

@@ -4,6 +4,7 @@ use eframe::emath::{Pos2, Vec2};
 
 use super::{ucell::UnMxEdge, MxCell};
 
+#[allow(dead_code)]
 pub(crate) struct Transform {
     pub(crate) scroll_delta: Vec2,
     pub(crate) zoom_factor: f32,
@@ -18,6 +19,7 @@ impl Default for Transform {
     }
 }
 
+#[allow(dead_code)]
 pub enum GraphState {
     Tool(MxCell),
     Arrow(UnMxEdge),
@@ -25,6 +27,7 @@ pub enum GraphState {
     Nothing,
 }
 
+#[allow(dead_code)]
 pub struct GraphUI {
     last_id: usize,
     transform: Transform,
@@ -45,6 +48,7 @@ impl Default for GraphUI {
     }
 }
 
+#[allow(dead_code)]
 impl GraphUI {
     /// Tolerance for detect cursor in point
     const EPSILON: f32 = 5.0;
@@ -54,7 +58,7 @@ impl GraphUI {
             // Do nothing because
             GraphState::Nothing => {
                 // Trying to find selected figure
-                let found_cell = self.cells.iter().find_map(|cell| {
+                let _ = self.cells.iter().find_map(|cell| {
                     let mut_cell = cell.borrow_mut();
                     mut_cell.contains(hover_point, Self::EPSILON)
                 });
@@ -64,6 +68,7 @@ impl GraphUI {
     }
 }
 
+#[allow(dead_code)]
 pub struct Graph {
     grap_ud: GraphUI,
 }

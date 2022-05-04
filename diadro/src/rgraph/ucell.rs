@@ -122,7 +122,7 @@ impl<'de> Visitor<'de> for UnMxEdgeVisitor {
                             None
                         }
                     };
-                    start = end_id.map(|v| MxCell::new(v));
+                    start = end_id.map(MxCell::new);
                 }
                 "start_point" => {
                     start_point = Some(map.next_value()?);
@@ -137,7 +137,7 @@ impl<'de> Visitor<'de> for UnMxEdgeVisitor {
                             None
                         }
                     };
-                    end = end_id.map(|v| MxCell::new(v));
+                    end = end_id.map(MxCell::new);
                 }
                 "end_point" => {
                     end_point = Some(map.next_value()?);
@@ -180,7 +180,7 @@ impl<'de> Deserialize<'de> for UnMxEdge {
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &'static [&'static str] = &["start", "end"];
+        const FIELDS: &[&str] = &["start", "end"];
         deserializer.deserialize_struct("name", FIELDS, UnMxEdgeVisitor)
     }
 }

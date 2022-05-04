@@ -3,7 +3,7 @@ use eframe::emath::Pos2;
 pub trait PointAlgoritm {
     /// Check if point lies on given line
     fn belong_line(&self, line: &[Pos2; 2], epsilon: f32) -> bool;
-    fn belong_path(&self, path: &Vec<Pos2>, epsilon: f32) -> bool;
+    fn belong_path(&self, path: &[Pos2], epsilon: f32) -> bool;
 }
 
 impl PointAlgoritm for Pos2 {
@@ -44,7 +44,7 @@ impl PointAlgoritm for Pos2 {
         }
     }
 
-    fn belong_path(&self, points: &Vec<Pos2>, epsilon: f32) -> bool {
+    fn belong_path(&self, points: &[Pos2], epsilon: f32) -> bool {
         for idx in 1..points.len() {
             let start = points[idx - 1];
             let end = points[idx];

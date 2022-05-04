@@ -73,7 +73,7 @@ impl TextOps {
         let text = self.text.clone().into_owned();
         let galley = ui
             .painter()
-            .layout(text.clone(), self.font.clone(), color, rc.width());
+            .layout(text, self.font.clone(), color, rc.width());
 
         let width = rc.width() / self.adj_ratio;
         let height = rc.height() / self.adj_ratio;
@@ -307,9 +307,7 @@ impl TextOps {
     /// new string
     fn remove_char_at(&self, s: String, pos: usize) -> String {
         let count = s.chars().count();
-        if pos > count {
-            s
-        } else if count == 0 || pos == 0 {
+        if pos > count || (count == 0 || pos == 0) {
             s
         } else {
             let mut sc = s.chars().collect::<Vec<char>>();

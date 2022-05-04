@@ -20,14 +20,14 @@ impl Figure {
             }
             Figure::LineSegment { points, stroke } => Shape::LineSegment {
                 points: *points,
-                stroke: stroke.clone(),
+                stroke: *stroke,
             },
             Figure::Path(path) => Shape::Path(path.clone()),
             Figure::Rect(rect) => Shape::Rect(*rect),
             Figure::Text(text) => Shape::Text(text.clone()),
             Figure::Mesh(mesh) => Shape::Mesh(mesh.clone()),
-            Figure::QuadraticBezier(qb) => Shape::QuadraticBezier(qb.clone()),
-            Figure::CubicBezier(cb) => Shape::CubicBezier(cb.clone()),
+            Figure::QuadraticBezier(qb) => Shape::QuadraticBezier(*qb),
+            Figure::CubicBezier(cb) => Shape::CubicBezier(*cb),
         }
     }
 

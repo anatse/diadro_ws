@@ -4,7 +4,7 @@ use std::{
 };
 
 use eframe::{
-    egui::{CursorIcon, Id, InnerResponse, Painter, PointerButton, Sense, Ui, Visuals},
+    egui::{CursorIcon, Id, InnerResponse, Painter, PointerButton, Sense, Ui},
     emath::{Align2, Vec2},
     epaint::{Color32, FontId, Pos2, Stroke},
 };
@@ -106,8 +106,7 @@ impl GraphicsData {
 
         if self.select_enabled {
             self.selected_figure_idx = None;
-            let mut index = 0;
-            for r in self.figures.iter_mut() {
+            for (index, r) in self.figures.iter_mut().enumerate() {
                 let s = RefCell::borrow(r).selected();
                 r.borrow_mut().select(s & !SELECT_MODE_HOVER);
 
@@ -115,8 +114,6 @@ impl GraphicsData {
                     self.selected_figure_idx = Some(index);
                     cursor = Some(ci);
                 }
-
-                index += 1;
             }
 
             if let Some(idx) = self.selected_figure_idx {
@@ -197,17 +194,10 @@ impl GraphicsData {
 }
 
 /// Defines all graphics diagram operations
+#[derive(Default)]
 pub struct Graphics {
     /// Graphics data
     graphics_data: GraphicsData,
-}
-
-impl Graphics {
-    pub fn new() -> Self {
-        Self {
-            graphics_data: GraphicsData::default(),
-        }
-    }
 }
 
 /// Implies graphics/digram operations
@@ -249,7 +239,7 @@ impl Graphics {
     fn draw_edge_controls(&mut self, ui: &mut Ui) {
         if let Some(fig) = self.selected_figure() {
             // Draw only for selected figures
-            let fig = RefCell::borrow(&fig);
+            let fig = RefCell::borrow(fig);
             // let rect = fig.borrow().rect();
             let points = fig.connection_points();
             let painter = ui.painter();
@@ -277,8 +267,6 @@ impl Graphics {
         incoming: Ref<'_, Vec<WsMessages>>,
     ) -> InnerResponse<Vec<WsMessages>> {
         let mut inner = vec![];
-        let ctx = ui.ctx();
-        // ctx.set_visuals(Visuals::light());
 
         // Compute size
         let size = ui.available_size_before_wrap();

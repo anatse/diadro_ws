@@ -35,9 +35,7 @@ impl ConnectionPoint {
     /// Return connetion point position
     pub fn get_connection_pos(&self) -> Option<Pos2> {
         let fig = self.figure.borrow();
-        fig.connection_points()
-            .get(self.connection_point)
-            .map(|p| *p)
+        fig.connection_points().get(self.connection_point).copied()
     }
 
     /// Return figure top which this connections point is connected
@@ -263,11 +261,7 @@ impl GraphFigure for ArrowFigure {
     }
 
     fn select(&mut self, selected: SelectMode) {
-        self.selected = if selected & SELECT_MODE_SELECTED > 0 {
-            true
-        } else {
-            false
-        };
+        self.selected = selected & SELECT_MODE_SELECTED > 0;
     }
 
     fn contains(&self, point: Pos2) -> Option<CursorIcon> {

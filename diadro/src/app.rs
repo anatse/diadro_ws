@@ -29,7 +29,7 @@ impl Default for TemplateApp {
     fn default() -> Self {
         Self {
             id: Uuid::new_v4().to_string(),
-            plot: Graphics::new(),
+            plot: Graphics::default(),
             ctx: None,
             packet_start: None,
             packet: Default::default(),
@@ -41,7 +41,7 @@ impl Default for TemplateApp {
     fn default() -> Self {
         Self {
             id: Uuid::new_v4().to_string(),
-            plot: Graphics::new(),
+            plot: Graphics::default(),
             ctx: None,
             packet_start: None,
             packet: vec![],
@@ -107,7 +107,7 @@ impl TemplateApp {
                 self.packet_start = Some(Utc::now());
             }
             Some(start) if Utc::now() - start > Duration::microseconds(100) => {
-                if self.packet.len() > 0 {
+                if !self.packet.is_empty() {
                     tracing::info!("Packet: {}", self.packet.len());
                     match serde_json::to_string(&self.packet) {
                         Ok(msg) => {
@@ -224,7 +224,7 @@ impl eframe::App for TemplateApp {
 
             // let incoming_message = self.incoming_messages.borrow();
             let msg = self.plot.ui(ui, self.incoming_messages.borrow());
-            if msg.inner.len() > 0 {
+            if !msg.inner.is_empty() {
                 match serde_json::to_string(&msg.inner) {
                     Ok(s) => self.send(&s),
                     Err(err) => tracing::error!("Error serializing: {}", err),
