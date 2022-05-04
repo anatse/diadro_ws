@@ -278,7 +278,7 @@ impl Graphics {
     ) -> InnerResponse<Vec<WsMessages>> {
         let mut inner = vec![];
         let ctx = ui.ctx();
-        ctx.set_visuals(Visuals::light());
+        // ctx.set_visuals(Visuals::light());
 
         // Compute size
         let size = ui.available_size_before_wrap();

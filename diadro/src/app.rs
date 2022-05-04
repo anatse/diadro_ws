@@ -2,7 +2,7 @@ use crate::graph::Graphics;
 use crate::ws::{MousePosition, RequestInfo, WsMessages};
 use chrono::{DateTime, Duration, Utc};
 use eframe::egui::{Id, LayerId, Ui, Vec2};
-use eframe::{egui, epi};
+use eframe::egui;
 use uuid::Uuid;
 use {std::cell::RefCell, std::rc::Rc};
 
@@ -50,6 +50,10 @@ impl Default for TemplateApp {
 
 /// Implies web-socket communications
 impl TemplateApp {
+    pub fn new(_cc: &eframe::CreationContext<'_>) -> Self {
+        Default::default()
+    }
+
     #[cfg(not(target_arch = "wasm32"))]
     /// web-socket processing threaad for not desktop application
     fn start_read_ws(&mut self, ctx: &egui::Context) {
@@ -169,10 +173,10 @@ impl TemplateApp {
     }
 }
 
-impl epi::App for TemplateApp {
+impl eframe::App for TemplateApp {
     /// Called each time the UI needs repainting, which may be many times per second.
     /// Put your widgets into a `SidePanel`, `TopPanel`, `CentralPanel`, `Window` or `Area`.
-    fn update(&mut self, ctx: &egui::Context, _frame: &mut epi::Frame) {
+    fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         if self.ctx.is_none() {
             self.ctx = Some(ctx.clone());
         }
@@ -189,22 +193,25 @@ impl epi::App for TemplateApp {
         }
 
         self.start_read_ws(ctx);
+        egui::CentralPanel::default().show(ctx, |ui| {
+            egui::warn_if_debug_build(ui);
 
-        let id = Id::new("Main");
-        let available_rect = ctx.available_rect();
-        let layer_id = LayerId::background();
-        let clip_rect = ctx.input().screen_rect();
-        let mut ui = Ui::new(ctx.clone(), layer_id, id, available_rect, clip_rect);
+            egui::Window::new("Window").show(ctx, |ui| {
+                ui.label("Windows can be moved by dragging them.");
+                ui.label("They are automatically sized based on contents.");
+                ui.label("You can turn on resizing and scrolling if you like.");
+                ui.label("You would normally chose either panels OR windows.");
+            });
 
-        // let incoming_message = self.incoming_messages.borrow();
-        let msg = self.plot.ui(&mut ui, self.incoming_messages.borrow());
-        match serde_json::to_string(&msg.inner) {
-            Ok(s) => self.send(&s),
-            Err(err) => tracing::error!("Error serializing: {}", err),
-        }
+            // let incoming_message = self.incoming_messages.borrow();
+            let msg = self.plot.ui(ui, self.incoming_messages.borrow());
+            match serde_json::to_string(&msg.inner) {
+                Ok(s) => self.send(&s),
+                Err(err) => tracing::error!("Error serializing: {}", err),
+            }
 
-        self.incoming_messages.borrow_mut().clear();
-        egui::warn_if_debug_build(&mut ui);
+            self.incoming_messages.borrow_mut().clear();
+        });
     }
 
     fn max_size_points(&self) -> Vec2 {

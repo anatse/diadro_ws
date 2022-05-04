@@ -10,7 +10,8 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 tracing = "*"
-eframe = { git = "https://github.com/emilk/egui", branch = "master", features=["persistence"] }
+# eframe = { git = "https://github.com/emilk/egui", branch = "master", features=["persistence"] }
+eframe = { version = "*", features=["persistence"] }
 serde = { version = "*", features = ["derive"] }
 serde_json = "*"
 minidom = "0.14.0"
