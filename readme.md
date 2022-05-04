@@ -5,7 +5,7 @@ For UI and drawing using [egui](https://github.com/emilk/egui) library
 * [diadro](./diadro/) - Desktop application or WASM library, depending on selected compile target
 
 ## Code view
-If you using Visual Studio Code use plugin [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) for better perception.
+If you're using Visual Studio Code use plugin [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) for a better perception.
 
 ## Compilation and start
 
