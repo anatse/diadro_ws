@@ -11,7 +11,7 @@ If you're using Visual Studio Code use plugin [Better Comments](https://marketpl
 
 ### Compile WASM
 
-* Build WASM file%
+* Build WASM file:
 ```bash
     cd ./diadro
     ./build-web.sh
