@@ -1,6 +1,28 @@
 # Aoplication to test one code for WASM and Desktop drawing in couple with WebSocket communications
-For UI and drawing using [egui|https://github.com/emilk/egui] library
+For UI and drawing using [egui](https://github.com/emilk/egui) library
 
-* [dserver] - WebSocket server
-* [diadro] - Desktop application or WASM library, depending on selected compile target
+* [dserver](./dserver/) - WebSocket server
+* [diadro](./diadro/) - Desktop application or WASM library, depending on selected compile target
 
+## Code view
+If you using Visual Studio Code use plugin [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) for better perception.
+
+## Compilation and start
+
+### Compile WASM
+
+* Build WASM file%
+```bash
+    cd ./diadro
+    ./build-web.sh
+```
+
+* WASM file and other files needed to run HTTP page located in [diadro/docs](./diadro/docs/)
+
+### Compile and run server
+Three are two methods to run 
+
+```bash
+
+
+```
