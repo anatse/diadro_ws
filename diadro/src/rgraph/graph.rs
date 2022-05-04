@@ -55,7 +55,7 @@ impl GraphUI {
             GraphState::Nothing => {
                 // Trying to find selected figure
                 let found_cell = self.cells.iter().find_map(|cell| {
-                    let mut_cell =  cell.borrow_mut();
+                    let mut_cell = cell.borrow_mut();
                     mut_cell.contains(hover_point, Self::EPSILON)
                 });
             }
@@ -68,6 +68,4 @@ pub struct Graph {
     grap_ud: GraphUI,
 }
 
-impl Graph {
-    
-}
+impl Graph {}

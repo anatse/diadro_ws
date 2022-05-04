@@ -1,12 +1,12 @@
 use crate::graph::Graphics;
 use crate::ws::{MousePosition, RequestInfo, WsMessages};
 use chrono::{DateTime, Duration, Utc};
-use eframe::egui::Vec2;
 use eframe::egui;
+use eframe::egui::Vec2;
 use uuid::Uuid;
 use {std::cell::RefCell, std::rc::Rc};
 
-// ! For WASM only 
+// ! For WASM only
 #[cfg(target_arch = "wasm32")]
 use wasm_sockets::EventClient;
 
@@ -107,15 +107,19 @@ impl TemplateApp {
                 self.packet_start = Some(Utc::now());
             }
             Some(start) if Utc::now() - start > Duration::microseconds(100) => {
-                match serde_json::to_string(&self.packet) {
-                    Ok(msg) => {
-                        tracing::debug!("Sending messages");
-                        self.send(&msg);
+                if self.packet.len() > 0 {
+                    tracing::info!("Packet: {}", self.packet.len());
+                    match serde_json::to_string(&self.packet) {
+                        Ok(msg) => {
+                            tracing::debug!("Sending messages");
+                            self.send(&msg);
+                        }
+                        Err(err) => tracing::error!("Error serializing messages: {:?}", err),
                     }
-                    Err(err) => tracing::error!("Error serializing messages: {:?}", err),
+
+                    self.packet.clear();
                 }
 
-                self.packet.clear();
                 self.packet.push(message);
                 let _ = self.packet_start.take();
             }
@@ -132,7 +136,15 @@ impl TemplateApp {
 
             let window = match web_sys::window() {
                 Some(wnd) => format!(
-                    "ws://{}:{}/ws/{}",
+                    "{}://{}:{}/ws/{}",
+                    match wnd.location().protocol() {
+                        Ok(proto) if proto.as_str() == "http:" => "ws",
+                        Ok(proto) if proto.as_str() == "https:" => "wss",
+                        proto => {
+                            tracing::info!("protocol: {:?}", proto);
+                            "ws"
+                        }
+                    },
                     wnd.location().hostname().unwrap(),
                     wnd.location().port().unwrap(),
                     self.id
@@ -212,9 +224,11 @@ impl eframe::App for TemplateApp {
 
             // let incoming_message = self.incoming_messages.borrow();
             let msg = self.plot.ui(ui, self.incoming_messages.borrow());
-            match serde_json::to_string(&msg.inner) {
-                Ok(s) => self.send(&s),
-                Err(err) => tracing::error!("Error serializing: {}", err),
+            if msg.inner.len() > 0 {
+                match serde_json::to_string(&msg.inner) {
+                    Ok(s) => self.send(&s),
+                    Err(err) => tracing::error!("Error serializing: {}", err),
+                }
             }
 
             self.incoming_messages.borrow_mut().clear();

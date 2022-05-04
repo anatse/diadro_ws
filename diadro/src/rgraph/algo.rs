@@ -49,7 +49,7 @@ impl PointAlgoritm for Pos2 {
             let start = points[idx - 1];
             let end = points[idx];
             if self.belong_line(&[start, end], epsilon) {
-                return true
+                return true;
             }
         }
         false
@@ -61,10 +61,15 @@ mod tests {
     #[test]
     fn test_find_map() {
         let array = [1, 2, 3, 4, 2, 5, 6, 7, 8, 16, 18, 24];
-        let found = array.iter().find_map(|v| if v % 2 == 0 { Some(v) } else { None });
+        let found = array
+            .iter()
+            .find_map(|v| if v % 2 == 0 { Some(v) } else { None });
         assert_eq!(found, Some(&2));
 
-        let found = array.iter().rev().find_map(|v| if v % 2 == 0 { Some(v) } else { None });
+        let found = array
+            .iter()
+            .rev()
+            .find_map(|v| if v % 2 == 0 { Some(v) } else { None });
         assert_eq!(found, Some(&24));
     }
 }

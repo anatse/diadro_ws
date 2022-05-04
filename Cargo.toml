@@ -6,6 +6,6 @@ members = [
 ]
 
 [profile.release]
-opt-level = "s" # fast and small wasm
+opt-level = "z" # fast and small wasm
 lto = true
 strip = true

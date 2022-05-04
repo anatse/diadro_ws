@@ -31,9 +31,9 @@ impl DroServer {
 
 impl DroServer {
     /// Broadcast message to all connected clients, except sender (skip_client)
-    fn broadcast(&self, board: &str, message: &str, skip_client: &str) {
-        tracing::info!("Sessions: {:?}", self.sessions);
-        tracing::info!("Boards: {:?}, board: {}", self.boards, board);
+    fn broadcast(&self, _board: &str, message: &str, skip_client: &str) {
+        // tracing::info!("Sessions: {:?}", self.sessions);
+        // tracing::info!("Boards: {:?}, board: {}", self.boards, board);
         let _ = self.boards.get("Main").map(|clients| {
             tracing::debug!("{:?}", self.sessions);
             clients
@@ -41,7 +41,7 @@ impl DroServer {
                 .filter(|c| *c != skip_client)
                 .filter_map(|c| self.sessions.get(c))
                 .for_each(|addr| {
-                    tracing::info!("Send message to client: {:?}", addr);
+                    // tracing::info!("Send message to client: {:?}", addr);
                     let _ = addr.do_send(Message(message.to_owned()));
                 })
         });

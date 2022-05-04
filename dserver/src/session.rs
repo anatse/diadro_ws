@@ -68,7 +68,7 @@ impl Actor for WsChatSession {
     /// Method is called on actor start.
     /// We register ws session with ChatServer
     fn started(&mut self, ctx: &mut Self::Context) {
-        tracing::info!("WS session started: {}", &self.id);
+        tracing::debug!("WS session started: {}", &self.id);
 
         // we'll start heartbeat process on session start.
         self.hb(ctx);
@@ -97,7 +97,7 @@ impl Actor for WsChatSession {
     }
 
     fn stopping(&mut self, _: &mut Self::Context) -> Running {
-        tracing::info!("WS session stopping");
+        tracing::debug!("WS session stopping");
         // notify chat server
         self.addr.do_send(Disconnect {
             user_id: self.id.clone(),
@@ -152,7 +152,7 @@ impl StreamHandler<Result<ws::Message, ws::ProtocolError>> for WsChatSession {
                         .into_actor(self)
                         .then(|res, _, _ctx| {
                             match res {
-                                Ok(_) => tracing::info!("Ok"),
+                                Ok(_) => tracing::debug!("Ok"),
                                 Err(err) => tracing::error!("Something is wrong {}", err),
                             }
                             fut::ready(())
