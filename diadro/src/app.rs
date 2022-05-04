@@ -1,11 +1,12 @@
 use crate::graph::Graphics;
 use crate::ws::{MousePosition, RequestInfo, WsMessages};
 use chrono::{DateTime, Duration, Utc};
-use eframe::egui::{Id, LayerId, Ui, Vec2};
+use eframe::egui::Vec2;
 use eframe::egui;
 use uuid::Uuid;
 use {std::cell::RefCell, std::rc::Rc};
 
+// ! For WASM only 
 #[cfg(target_arch = "wasm32")]
 use wasm_sockets::EventClient;
 
@@ -16,9 +17,11 @@ pub struct TemplateApp {
     ctx: Option<egui::Context>,
     packet_start: Option<DateTime<Utc>>,
     packet: Vec<WsMessages>,
-    #[cfg(target_arch = "wasm32")]
-    client: Rc<RefCell<Option<EventClient>>>,
     incoming_messages: Rc<RefCell<Vec<WsMessages>>>,
+
+    #[cfg(target_arch = "wasm32")]
+    /// ! For WASM Only
+    client: Rc<RefCell<Option<EventClient>>>,
 }
 
 impl Default for TemplateApp {
@@ -56,6 +59,7 @@ impl TemplateApp {
 
     #[cfg(not(target_arch = "wasm32"))]
     /// web-socket processing threaad for not desktop application
+    /// ! for desktop only code
     fn start_read_ws(&mut self, ctx: &egui::Context) {
         use std::time::Duration;
 
@@ -75,13 +79,15 @@ impl TemplateApp {
     }
 
     #[cfg(not(target_arch = "wasm32"))]
-    /// Send web socket message for Desctop application
+    /// Send web socket message for Desktop application
+    /// ! for desktop only code
     fn send(&self, _message: &str) {
         todo!();
     }
 
     #[cfg(target_arch = "wasm32")]
     /// Send web-socket message for WASM application
+    /// ! for WASM only
     fn send(&self, message: &str) {
         if let Some(client) = self.client.borrow().as_ref() {
             match client.send_string(message) {
@@ -119,6 +125,7 @@ impl TemplateApp {
 
     #[cfg(target_arch = "wasm32")]
     /// WebSocket communication from WASM applicaiton
+    /// ! for WASM only
     fn start_read_ws(&mut self, _: &egui::Context) {
         if self.client.borrow().is_none() {
             tracing::debug!("Starting websocket commincation inside WASM");

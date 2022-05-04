@@ -1,4 +1,4 @@
-# Aoplication to test one code for WASM and Desktop drawing in couple with WebSocket communications
+# Application to test one code for WASM and Desktop drawing in couple with WebSocket communications
 For UI and drawing using [egui](https://github.com/emilk/egui) library
 
 * [dserver](./dserver/) - WebSocket server
@@ -22,7 +22,9 @@ If you're using Visual Studio Code use plugin [Better Comments](https://marketpl
 ### Compile and run server
 Three are two methods to run 
 
+* Through the IDE (Vscode od Atom or Intellij Idea) run main function from [dserver/src/main.rs](./dserver/src/main.rs)
+* Through the command line using cargo
 ```bash
-
-
+cargo clean
+cargo run --package dserver
 ```
