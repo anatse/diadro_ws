@@ -46,16 +46,18 @@ impl Default for GraphUI {
 }
 
 impl GraphUI {
+    /// Tolerance for detect cursor in point
+    const EPSILON: f32 = 5.0;
+
     pub fn on_hover(&mut self, hover_point: Pos2) {
         match self.state {
             // Do nothing because
             GraphState::Nothing => {
                 // Trying to find selected figure
-                // let found_cell = self.cells.iter().find_map(|cell| {
-                //     let mut_cell =  cell.borrow_mut();
-
-                //     mut_cell.
-                // });
+                let found_cell = self.cells.iter().find_map(|cell| {
+                    let mut_cell =  cell.borrow_mut();
+                    mut_cell.contains(hover_point, Self::EPSILON)
+                });
             }
             _ => {}
         }
@@ -67,6 +69,5 @@ pub struct Graph {
 }
 
 impl Graph {
-    /// Tolerance for detect cursor in point
-    const POINT_OVER_TOLERANCE: f32 = 7.0;
+    
 }

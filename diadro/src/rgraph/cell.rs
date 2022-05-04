@@ -261,9 +261,13 @@ impl MxCell {
             CellType::Edge(edge) => edge.contains(point),
             _ => match self.state {
                 MxCellState::Selected => self.find_cp(point, epsilon),
+
+                // check all shapes in
+                // ! REVERSE order
                 _ => self
                     .shapes
                     .iter()
+                    .rev()
                     .find_map(|figure| figure.contains(point, epsilon)),
             },
         }
